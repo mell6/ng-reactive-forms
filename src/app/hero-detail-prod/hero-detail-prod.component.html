@@ -1,0 +1,85 @@
+
+<h2>Hero Detail</h2>
+
+<form [formGroup]="heroForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div style="margin-bottom: 1em">
+    <button type="submit"
+            [disabled]="heroForm.pristine" class="btn btn-success">Save</button> &nbsp;
+    <button type="reset"
+            [disabled]="heroForm.pristine" class="btn btn-danger">Revert</button>
+  </div>
+
+  <div class="form-group">
+    <label class="center-block">Name:
+      <input class="form-control" formControlName="name">
+    </label>
+  </div>
+
+  <div formArrayName="secretLairs" class="well well-lg">
+
+    <div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i">
+
+      <h4>Address #{{ i + 1 }}</h4>
+      <div style="margin-left: 1em;">
+        <div class="form-group">
+          <label class="center-block">Street:
+            <input class="form-control" formControlName="street">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">City:
+            <input class="form-control" formControlName="city">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">State:
+            <select class="form-control" formControlName="state">
+                <option *ngFor="let state of states" [value]="state">{{state}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">Zip:
+            <input class="form-control" formControlName="zip">
+          </label>
+        </div>
+      </div>
+      <button (click)="removeLair(i)" type="button">Remove address #{{i+1}}</button>
+
+      <br/>
+    </div> <!-- of ngFor -->
+
+  </div> <!-- of formArraName -->
+  <button (click)="addLair()" type="button">Add a Secret Lair</button>
+
+  <div class="form-group radio">
+    <h4>Super power:</h4>
+    <label class="center-block"><input type="radio" formControlName="power" value="flight">Flight</label>
+    <label class="center-block"><input type="radio" formControlName="power" value="x-ray vision">X-ray vision</label>
+    <label class="center-block"><input type="radio" formControlName="power" value="strength">Strength</label>
+  <!--
+    this doesn't work
+    <label class="center-block" *ngFor="let superpower of powers">
+      <input type="radio" formControlName="power" value="superpower">{{superpower}}
+    </label>
+  -->
+  </div>
+  <div class="checkbox">
+    <label class="center-block">
+      <input type="checkbox" formControlName="sidekick">I have a sidekick.
+    </label>
+  </div>
+</form>
+
+<h4>Name change log</h4>
+<div *ngFor="let name of nameChangeLog">{{name}}</div>
+
+<!--
+<h1>---- heroForm JSON ----</h1>
+{{ heroForm.value | json }}
+<h2>---- heroForm status ----</h2>
+{{ heroForm.status | json }}
+<h2>---- heroForm pristine ----</h2>
+{{ heroForm.pristine | json }}
+-->

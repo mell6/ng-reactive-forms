@@ -1,0 +1,11 @@
+<h1>Heroes</h1>
+<nav>
+  <a *ngFor="let hero of heroes | async" (click)="select(hero)">{{ hero.name }}</a>
+</nav>
+
+<div *ngIf="selectedHero">
+  <app-hero-detail-prod [hero]="selectedHero"></app-hero-detail-prod>
+</div>
+
+<h1>---- heroes JSON ----</h1>
+{{ heroes | json }}
